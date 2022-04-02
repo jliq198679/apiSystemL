@@ -16,3 +16,9 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],function () use ($router){
+    $router->get('/test', function() use ($router){
+        return 'Ready';
+    });
+});
