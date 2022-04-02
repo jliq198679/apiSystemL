@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Laravel\Passport\Exceptions\OAuthServerException;
 use League\Flysystem\Exception;
+use League\Flysystem\Exception as ExceptionFlysystem;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -108,6 +109,13 @@ class Handler extends ExceptionHandler
                 Response::HTTP_UNAUTHORIZED);
         }
 
+        if ($exception instanceof ExceptionFlysystem) {
+            $errors = $exception->getMessage();
+            return $this->errorResponse(
+                $errors,
+                Response::HTTP_BAD_REQUEST);
+        }
+
         if (env('APP_DEBUG', false)) {
             return parent::render($request, $exception);
         }
@@ -115,7 +123,7 @@ class Handler extends ExceptionHandler
         return $this->errorResponse(
             "Unexpected error. Try later!",
             Response::HTTP_INTERNAL_SERVER_ERROR);
-        return parent::render($request, $exception);
-        return parent::render($request, $exception);
+        //return parent::render($request, $exception);
+
     }
 }
