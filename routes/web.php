@@ -21,9 +21,12 @@ $router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],funct
     $router->get('/test', function() use ($router){
         return 'Ready';
     });
-
     $router->group(['prefix' => 'image'], function () use ($router) {
         $router->post('upload', ['uses' => 'ImageController@upload']);
 
+    });
+    $router->group(['prefix' => 'frame-web'], function () use ($router) {
+        $router->get('/', ['uses' => 'FrameWebController@list']);
+        $router->post('/', ['uses' => 'FrameWebController@store']);
     });
 });
