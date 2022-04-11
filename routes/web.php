@@ -29,6 +29,7 @@ $router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],funct
         $router->get('/', ['uses' => 'FrameWebController@list']);
         $router->post('/', ['uses' => 'FrameWebController@store']);
         $router->put('/{id}', ['uses' => 'FrameWebController@update']);
+        $router->delete('/{id}', ['uses' => 'FrameWebController@destroy']);
     });
 });
 

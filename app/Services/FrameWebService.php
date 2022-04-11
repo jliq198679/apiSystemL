@@ -94,4 +94,13 @@ class FrameWebService
     {
         return FrameWeb::find($id);
     }
+
+    /**
+     * @param FrameWeb $frameWeb
+     * @return bool|null
+     */
+    public function destroy(FrameWeb $frameWeb)
+    {
+        return $frameWeb->delete();
+    }
 }

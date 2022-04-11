@@ -57,4 +57,13 @@ class FrameWebController extends Controller
         $response = $this->frameWebService->update($frameWeb,$request->all());
         return $this->successResponse($response);
     }
+
+    public function destroy($id)
+    {
+        $frameWeb = $this->frameWebService->show($id);
+        if(empty($frameWeb))
+            return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
+        $response = $this->frameWebService->destroy($frameWeb);
+        return $this->successResponse($response);
+    }
 }
