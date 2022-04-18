@@ -54,7 +54,7 @@ class FrameWebService
     /**
      * @param FrameWeb $frameWeb
      * @param $input
-     * @return bool|void
+     * @return FrameWeb
      */
     public function update(FrameWeb $frameWeb,$input)
     {
@@ -79,7 +79,8 @@ class FrameWebService
             if(isset($input['active']) && !empty($input['active']))
                 Arr::set($data,'active',1);
 
-            $frameWeb = FrameWeb::query()->where('id',$frameWeb->id)->update($data);
+            FrameWeb::query()->where('id',$frameWeb->id)->update($data);
+            $frameWeb->refresh();
             return $frameWeb;
         }
         catch (\Exception $exception)

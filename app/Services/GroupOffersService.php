@@ -15,6 +15,11 @@ class GroupOffersService
         return GroupOffer::all();
     }
 
+    public function listGroupWithOffer()
+    {
+        return GroupOffer::with('offers')->get();
+    }
+
     public function store($input)
     {
         return GroupOffer::query()->create($input);
@@ -27,7 +32,9 @@ class GroupOffersService
 
     public function update(GroupOffer $group,$input)
     {
-        return GroupOffer::query()->whereKey($group->id)->update($input);
+        GroupOffer::query()->whereKey($group->id)->update($input);
+        $group->refresh();
+        return $group;
     }
 
     public function destroy(FrameWeb $frameWeb)

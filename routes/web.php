@@ -33,9 +33,16 @@ $router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],funct
     });
     $router->group(['prefix' => 'group-offer'], function () use ($router) {
         $router->get('/', ['uses' => 'GroupOffersController@list']);
+        $router->get('/offers', ['uses' => 'GroupOffersController@listGroupWithOffer']);
         $router->post('/', ['uses' => 'GroupOffersController@store']);
         $router->put('/{id}', ['uses' => 'GroupOffersController@update']);
         $router->delete('/{id}', ['uses' => 'GroupOffersController@destroy']);
+    });
+    $router->group(['prefix' => 'offer'], function () use ($router) {
+        $router->get('/', ['uses' => 'OfferController@list']);
+        $router->post('/', ['uses' => 'OfferController@store']);
+        $router->put('/{id}', ['uses' => 'OfferController@update']);
+        $router->delete('/{id}', ['uses' => 'OfferController@destroy']);
     });
 });
 
@@ -44,4 +51,8 @@ $router->group(['prefix' => 'frame-web'], function () use ($router) {
 });
 $router->group(['prefix' => 'group-offer'], function () use ($router) {
     $router->get('/', ['uses' => 'GroupOffersController@list']);
+    $router->get('/offers', ['uses' => 'GroupOffersController@listGroupWithOffer']);
+});
+$router->group(['prefix' => 'offer'], function () use ($router) {
+    $router->get('/', ['uses' => 'OfferController@list']);
 });

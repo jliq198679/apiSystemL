@@ -14,4 +14,13 @@ class GroupOffer extends Model
     protected $fillable = [
         'name_group',
     ];
+
+    /**
+     * Relations
+     */
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class,'group_offer_id','id');
+    }
 }

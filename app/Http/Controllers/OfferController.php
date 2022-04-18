@@ -4,16 +4,18 @@
 namespace App\Http\Controllers;
 
 
-use App\Services\GroupOffersService;
+
+use App\Services\OffersService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
-class GroupOffersController extends Controller
+class OfferController extends Controller
 {
-    private $groupOffersService;
-    public function __construct(GroupOffersService $groupOffersService)
+    private $offersService;
+    public function __construct(OffersService $offersService)
     {
-        $this->groupOffersService = $groupOffersService;
+        $this->offersService = $offersService;
     }
 
     /**
@@ -21,13 +23,7 @@ class GroupOffersController extends Controller
      */
     public function list()
     {
-        $response = $this->groupOffersService->list();
-        return $this->successResponse($response);
-    }
-
-    public function listGroupWithOffer()
-    {
-        $response = $this->groupOffersService->listGroupWithOffer();
+        $response = $this->offersService->list();
         return $this->successResponse($response);
     }
 
@@ -39,9 +35,12 @@ class GroupOffersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name_group' => 'required',
+            'name_offer'=> 'required',
+            'description_offer'=> 'required',
+            'image' => 'nullable|image',
+            'group_offer_id' => 'nullable|exists:group_offers,id',
         ]);
-        $response = $this->groupOffersService->store($request->all());
+        $response = $this->offersService->store($request->all());
         return $this->successResponse($response);
     }
 
@@ -54,23 +53,25 @@ class GroupOffersController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request,[
-            'name_group' => 'required',
+            'name_offer'=> 'nullable',
+            'description_offer'=> 'nullable',
+            'image' => 'nullable|image',
+            'group_offer_id' => 'nullable|exists:group_offers,id',
         ]);
-        $groupOffer = $this->groupOffersService->show($id);
-        if(empty($groupOffer))
+        $offer = $this->offersService->show($id);
+        if(empty($offer))
             return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
 
-        $response = $this->groupOffersService->update($groupOffer,$request->all());
+        $response = $this->offersService->update($offer,$request->all());
         return $this->successResponse($response);
     }
 
     public function destroy($id)
     {
-        $groupOffer = $this->groupOffersService->show($id);
-        if(empty($groupOffer))
+        $offer = $this->offersService->show($id);
+        if(empty($offer))
             return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
-        $response = $this->groupOffersService->destroy($groupOffer);
+        $response = $this->offersService->destroy($offer);
         return $this->successResponse($response);
     }
-
 }
