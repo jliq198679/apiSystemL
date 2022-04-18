@@ -31,8 +31,17 @@ $router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],funct
         $router->put('/{id}', ['uses' => 'FrameWebController@update']);
         $router->delete('/{id}', ['uses' => 'FrameWebController@destroy']);
     });
+    $router->group(['prefix' => 'group-offer'], function () use ($router) {
+        $router->get('/', ['uses' => 'GroupOffersController@list']);
+        $router->post('/', ['uses' => 'GroupOffersController@store']);
+        $router->put('/{id}', ['uses' => 'GroupOffersController@update']);
+        $router->delete('/{id}', ['uses' => 'GroupOffersController@destroy']);
+    });
 });
 
 $router->group(['prefix' => 'frame-web'], function () use ($router) {
     $router->get('/', ['uses' => 'FrameWebController@list']);
+});
+$router->group(['prefix' => 'group-offer'], function () use ($router) {
+    $router->get('/', ['uses' => 'GroupOffersController@list']);
 });
