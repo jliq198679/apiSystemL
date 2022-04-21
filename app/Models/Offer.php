@@ -26,4 +26,14 @@ class Offer extends Model
     {
         return $this->belongsTo(GroupOffer::class,'group_offer_id','id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function offerDaily()
+    {
+        return $this->hasOne(OfferDaily::class,'offer_id','id')
+            ->whereRaw('date(offers_daily.created_at) = curdate()')
+            ;
+    }
 }

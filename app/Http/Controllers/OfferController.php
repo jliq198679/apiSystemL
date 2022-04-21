@@ -8,7 +8,6 @@ namespace App\Http\Controllers;
 use App\Services\OffersService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
 
 class OfferController extends Controller
 {

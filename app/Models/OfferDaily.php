@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OfferDaily extends Model
 {
     use SoftDeletes;
-    protected $table='frames_web';
+    protected $table='offers_daily';
     protected $fillable = [
         'frame_web_id',
         'offer_id',
