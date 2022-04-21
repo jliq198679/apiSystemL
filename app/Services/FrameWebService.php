@@ -9,13 +9,20 @@ use Illuminate\Support\Arr;
 class FrameWebService
 {
     private $fileService;
-    public function __construct(FileService $fileService)
+    private $offerDailyService;
+    public function __construct(FileService $fileService, OfferDailyService $offerDailyService)
     {
         $this->fileService = $fileService;
+        $this->offerDailyService = $offerDailyService;
     }
     public function list()
     {
-        $frameWebs = FrameWeb::where('active',1)->get()->toArray();
+        $frameWebs = FrameWeb::where('active',1)->get()->transform(function ($item){
+            if($item->type == 'offer_daily')
+                $item->offer_daily = $this->offerDailyService->list()->toArray();
+            return $item;
+        });
+
         return $frameWebs;
     }
 
@@ -42,6 +49,7 @@ class FrameWebService
             }
             $data = Arr::set($data,'payload_frame',$payload);
             $data = Arr::set($data,'active',1);
+            $data = Arr::set($data,'type',$input['type']);
             $frameWeb = FrameWeb::create($data);
             return $frameWeb;
         }
@@ -78,6 +86,8 @@ class FrameWebService
             Arr::set($data,'payload_frame',$payload);
             if(isset($input['active']) && !empty($input['active']))
                 Arr::set($data,'active',1);
+            if(isset($input['type']) && !empty($input['type']))
+                Arr::set($data,'type',$input['type']);
 
             FrameWeb::query()->where('id',$frameWeb->id)->update($data);
             $frameWeb->refresh();

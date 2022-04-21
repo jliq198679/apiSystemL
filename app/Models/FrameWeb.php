@@ -11,7 +11,8 @@ class FrameWeb extends Model
     protected $fillable = [
         'frame_name',
         'payload_frame',
-        'active'
+        'active',
+        'type'
     ];
     protected $casts= [
         'payload_frame' => 'array'

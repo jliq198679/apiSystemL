@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\FrameWebService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class FrameWebController extends Controller
 {
@@ -32,6 +33,7 @@ class FrameWebController extends Controller
     {
         $this->validate($request,[
             'frame_name' => 'required',
+            'type' => ['required',Rule::in(['payload_frame','offer_daily','offer_promotion','another'])],
             'offer_daily' => 'nullable'
         ]);
         $response = $this->frameWebService->store($request->all());
@@ -48,6 +50,7 @@ class FrameWebController extends Controller
     {
         $this->validate($request,[
             'frame_name' => 'nullable',
+            'type' =>[ 'nullable', Rule::in(['payload_frame','offer_daily','offer_promotion','another'])],
             'payload'=> 'nullable'
         ]);
         $frameWeb = $this->frameWebService->show($id);
