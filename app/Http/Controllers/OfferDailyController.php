@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Rules\FrameWebIsOfferDaily;
 use App\Services\OfferDailyService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -51,8 +52,8 @@ class OfferDailyController extends Controller
     public function storePackage(Request $request)
     {
         $this->validate($request,[
-            'frame_web_id' => 'required|exists:frames_web,id',
-            'offers'=> 'required|array'
+            'frame_web_id' => ['required', new FrameWebIsOfferDaily],
+            'offers'=> ['required','array']
         ]);
         $this->offerDailyService->storePackage($request->all());
         return $this->successResponse([]);
@@ -67,7 +68,7 @@ class OfferDailyController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request,[
-            'frame_web_id' => 'required|exists:frames_web,id',
+            'frame_web_id' => ['required',new FrameWebIsOfferDaily],
             'offer_id' => 'required|exists:offers,id',
             'price_usd'=> 'nullable',
             'price_cup'=> 'nullable',

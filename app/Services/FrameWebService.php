@@ -10,16 +10,20 @@ class FrameWebService
 {
     private $fileService;
     private $offerDailyService;
-    public function __construct(FileService $fileService, OfferDailyService $offerDailyService)
+    private $offerPromotionService;
+    public function __construct(FileService $fileService, OfferDailyService $offerDailyService, OfferPromotionService $offerPromotionService)
     {
         $this->fileService = $fileService;
         $this->offerDailyService = $offerDailyService;
+        $this->offerPromotionService = $offerPromotionService;
     }
     public function list()
     {
         $frameWebs = FrameWeb::where('active',1)->get()->transform(function ($item){
             if($item->type == 'offer_daily')
                 $item->offer_daily = $this->offerDailyService->list()->toArray();
+            if($item->type == 'offer_promotion')
+                $item->offer_promotion = $this->offerPromotionService->list($item->id)->toArray();
             return $item;
         });
 
@@ -35,6 +39,7 @@ class FrameWebService
         try{
             $data = [];
             $frame_name = Arr::pull($input,'frame_name');
+            $type = Arr::pull($input,'type');
             Arr::set($data,'frame_name',$frame_name);
             $payload = [];
             foreach ($input as $key => $value)
@@ -49,7 +54,7 @@ class FrameWebService
             }
             $data = Arr::set($data,'payload_frame',$payload);
             $data = Arr::set($data,'active',1);
-            $data = Arr::set($data,'type',$input['type']);
+            $data = Arr::set($data,'type',$type);
             $frameWeb = FrameWeb::create($data);
             return $frameWeb;
         }

@@ -33,8 +33,7 @@ class FrameWebController extends Controller
     {
         $this->validate($request,[
             'frame_name' => 'required',
-            'type' => ['required',Rule::in(['payload_frame','offer_daily','offer_promotion','another'])],
-            'offer_daily' => 'nullable'
+            'type' => ['required',Rule::in(['payload_frame','offer_daily','offer_promotion','another'])]
         ]);
         $response = $this->frameWebService->store($request->all());
         return $this->successResponse($response);

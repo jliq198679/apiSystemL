@@ -51,6 +51,12 @@ $router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],funct
         $router->put('/{id}', ['uses' => 'OfferDailyController@update']);
         $router->delete('/{id}', ['uses' => 'OfferDailyController@destroy']);
     });
+    $router->group(['prefix' => 'offer-promotion'], function () use ($router) {
+        $router->get('/', ['uses' => 'OfferPromotionController@list']);
+        $router->post('/', ['uses' => 'OfferPromotionController@store']);
+     //   $router->put('/{id}', ['uses' => 'OfferPromotionController@update']);
+        $router->delete('/{id}', ['uses' => 'OfferPromotionController@destroy']);
+    });
 });
 
 $router->group(['prefix' => 'frame-web'], function () use ($router) {
@@ -65,4 +71,7 @@ $router->group(['prefix' => 'offer'], function () use ($router) {
 });
 $router->group(['prefix' => 'offer-daily'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferController@list']);
+});
+$router->group(['prefix' => 'offer-promotion'], function () use ($router) {
+    $router->get('/', ['uses' => 'OfferPromotionController@list']);
 });

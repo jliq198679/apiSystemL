@@ -18,4 +18,17 @@ class FrameWeb extends Model
         'payload_frame' => 'array'
     ];
 
+    /**
+     * Relations
+     */
+    public function promotionOffers()
+    {
+        return $this->belongsToMany(
+            Offer::class,
+            'offer_promotion',
+            'frame_web_id',
+            'offer_id'
+        );
+    }
+
 }
