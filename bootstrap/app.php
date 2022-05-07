@@ -76,6 +76,7 @@ $app->configure('auth');
  $app->middleware([
     // App\Http\Middleware\ExampleMiddleware::class,
      App\Http\Middleware\AdminMiddleware::class,
+     App\Http\Middleware\CorsMiddleware::class
  ]);
 
  $app->routeMiddleware([
@@ -99,6 +100,7 @@ $app->configure('auth');
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 
 /*
 |--------------------------------------------------------------------------
