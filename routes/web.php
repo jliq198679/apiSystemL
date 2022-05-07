@@ -16,8 +16,13 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-
+/*
 $router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],function () use ($router){
+
+});
+*/
+
+$router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use ($router){
     $router->get('/test', function() use ($router){
         return 'Ready';
     });
@@ -54,7 +59,7 @@ $router->group(['prefix' => 'api','middleware' => ['client.credentials'] ],funct
     $router->group(['prefix' => 'offer-promotion'], function () use ($router) {
         $router->get('/', ['uses' => 'OfferPromotionController@list']);
         $router->post('/', ['uses' => 'OfferPromotionController@store']);
-     //   $router->put('/{id}', ['uses' => 'OfferPromotionController@update']);
+        //   $router->put('/{id}', ['uses' => 'OfferPromotionController@update']);
         $router->delete('/{id}', ['uses' => 'OfferPromotionController@destroy']);
     });
     $router->group(['prefix' => 'users'], function () use ($router) {

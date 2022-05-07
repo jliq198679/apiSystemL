@@ -31,7 +31,7 @@ class UsersService
     public function update(User $user,$input)
     {
         if(isset($input['password']))
-            Arr::set($input,'password',Hash::make('password'));
+            Arr::set($input,'password',Hash::make( $input['password'] ));
         return User::query()->where('id',$user->id)->update($input);
     }
 
