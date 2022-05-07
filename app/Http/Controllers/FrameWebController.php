@@ -41,6 +41,18 @@ class FrameWebController extends Controller
 
     /**
      * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
+    {
+        $frameWeb = $this->frameWebService->show($id);
+        if(empty($frameWeb))
+            return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
+        return $this->successResponse($frameWeb);
+    }
+
+    /**
+     * @param $id
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|Response|\Laravel\Lumen\Http\ResponseFactory
      * @throws \Illuminate\Validation\ValidationException
