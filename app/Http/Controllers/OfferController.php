@@ -34,8 +34,10 @@ class OfferController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name_offer'=> 'required',
-            'description_offer'=> 'required',
+            'name_offer_es'=> 'required',
+            'name_offer_en'=> 'required',
+            'description_offer_en'=> 'required',
+            'description_offer_es'=> 'required',
             'image' => 'nullable|image',
             'group_offer_id' => 'nullable|exists:group_offers,id',
         ]);
@@ -52,8 +54,10 @@ class OfferController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request,[
-            'name_offer'=> 'nullable',
-            'description_offer'=> 'nullable',
+            'name_offer_es'=> 'nullable',
+            'name_offer_en'=> 'nullable',
+            'description_offer_en'=> 'nullable',
+            'description_offer_es'=> 'nullable',
             'image' => 'nullable|image',
             'group_offer_id' => 'nullable|exists:group_offers,id',
         ]);

@@ -12,8 +12,10 @@ class Offer extends Model
     use SoftDeletes;
     protected $table='offers';
     protected $fillable = [
-        'name_offer',
-        'description_offer',
+        'name_offer_en',
+        'name_offer_es',
+        'description_offer_en',
+        'description_offer_es',
         'url_imagen',
         'group_offer_id'
     ];

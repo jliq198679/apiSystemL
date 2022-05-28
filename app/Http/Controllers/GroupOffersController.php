@@ -39,7 +39,8 @@ class GroupOffersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name_group' => 'required',
+            'name_group_es' => 'required',
+            'name_group_en' => 'required',
         ]);
         $response = $this->groupOffersService->store($request->all());
         return $this->successResponse($response);
@@ -54,7 +55,8 @@ class GroupOffersController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request,[
-            'name_group' => 'required',
+            'name_group_es' => 'nullable',
+            'name_group_en' => 'nullable',
         ]);
         $groupOffer = $this->groupOffersService->show($id);
         if(empty($groupOffer))

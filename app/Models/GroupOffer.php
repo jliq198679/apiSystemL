@@ -12,7 +12,8 @@ class GroupOffer extends Model
     use SoftDeletes;
     protected $table='group_offers';
     protected $fillable = [
-        'name_group',
+        'name_group_es',
+        'name_group_en',
     ];
 
     /**
