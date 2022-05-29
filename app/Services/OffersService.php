@@ -17,9 +17,15 @@ class OffersService
         $this->fileService = $fileService;
     }
 
-    public function list()
+    public function list($input)
     {
-        return Offer::with('groupOffer')->get();
+        return Offer::query()->with('groupOffer')->paginate(
+            isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
+            '*',
+            'page',
+            isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
+
+        );;
     }
 
     public function store($input)

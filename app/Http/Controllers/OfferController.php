@@ -20,9 +20,13 @@ class OfferController extends Controller
     /**
      * @return Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function list()
+    public function list(Request $request)
     {
-        $response = $this->offersService->list();
+        $this->validate($request,[
+            'page' => ['nullable','integer'],
+            'per_page' => ['nullable','integer'],
+        ]);
+        $response = $this->offersService->list($request->all());
         return $this->successResponse($response);
     }
 
