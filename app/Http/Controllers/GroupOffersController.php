@@ -19,15 +19,23 @@ class GroupOffersController extends Controller
     /**
      * @return Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function list()
+    public function list(Request $request)
     {
-        $response = $this->groupOffersService->list();
+        $this->validate($request,[
+            'page' => ['nullable','integer'],
+            'per_page' => ['nullable','integer'],
+        ]);
+        $response = $this->groupOffersService->list($request->all());
         return $this->successResponse($response);
     }
 
-    public function listGroupWithOffer()
+    public function listGroupWithOffer(Request $request)
     {
-        $response = $this->groupOffersService->listGroupWithOffer();
+        $this->validate($request,[
+            'page' => ['nullable','integer'],
+            'per_page' => ['nullable','integer'],
+        ]);
+        $response = $this->groupOffersService->listGroupWithOffer($request->all());
         return $this->successResponse($response);
     }
 

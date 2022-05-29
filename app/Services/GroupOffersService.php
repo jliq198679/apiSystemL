@@ -10,14 +10,26 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class GroupOffersService
 {
-    public function list()
+    public function list($input)
     {
-        return GroupOffer::all();
+        return GroupOffer::query()->paginate(
+            isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
+            '*',
+            'page',
+            isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
+
+        );
     }
 
-    public function listGroupWithOffer()
+    public function listGroupWithOffer($input)
     {
-        return GroupOffer::with('offers')->get();
+        return GroupOffer::query()->with('offers')->paginate(
+            isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
+            '*',
+            'page',
+            isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
+
+        );;
     }
 
     public function store($input)
