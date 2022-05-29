@@ -37,7 +37,7 @@ class GroupOffersService
         return $group;
     }
 
-    public function destroy(FrameWeb $frameWeb)
+    public function destroy(GroupOffer $frameWeb)
     {
         return $frameWeb->delete();
     }
