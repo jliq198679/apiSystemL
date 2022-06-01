@@ -12,7 +12,9 @@ class GroupOffersService
 {
     public function list($input)
     {
-        return GroupOffer::query()->paginate(
+        $query = GroupOffer::query()->category();
+      //  $query = GroupOffer::query()->groupOffer();
+        return $query->paginate(
             isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
             '*',
             'page',
