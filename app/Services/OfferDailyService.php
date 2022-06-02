@@ -31,17 +31,13 @@ class OfferDailyService
                 },
                 'offers'=> function($query) {
                     $query->has('offerDaily')
-                        ->with('offerDaily')
-
-                    ;
+                        ->with('offerDaily');
                 }
             ])
             ->withCount([
                 'offers'=> function($query) {
                     $query->has('offerDaily')
-                        ->with('offerDaily')
-
-                    ;
+                        ->with('offerDaily');
                 }
             ])
             ->get();
@@ -68,6 +64,14 @@ class OfferDailyService
             ];
         });
         return $data;
+    }
+
+    public function listSubCategory($category)
+    {
+        return GroupOffer::query()->subCategory()
+            ->where('category_id',$category)
+            ->has('offers.offerDaily')
+            ->get();
     }
 
     public function store($input)
