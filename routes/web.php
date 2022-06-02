@@ -43,6 +43,7 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->post('/', ['uses' => 'GroupOffersController@store']);
         $router->put('/{id}', ['uses' => 'GroupOffersController@update']);
         $router->delete('/{id}', ['uses' => 'GroupOffersController@destroy']);
+        $router->get('/get-subCategory/{category_id}', ['uses' => 'GroupOffersController@listSubCategory']);
     });
     $router->group(['prefix' => 'offer'], function () use ($router) {
         $router->get('/', ['uses' => 'OfferController@list']);

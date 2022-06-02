@@ -29,6 +29,12 @@ class GroupOffersController extends Controller
         return $this->successResponse($response);
     }
 
+    public function listSubCategory($category_id)
+    {
+        $response = $this->groupOffersService->listSubCategory($category_id);
+        return $this->successResponse($response);
+    }
+
     public function listGroupWithOffer(Request $request)
     {
         $this->validate($request,[

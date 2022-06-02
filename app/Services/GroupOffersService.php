@@ -13,7 +13,6 @@ class GroupOffersService
     public function list($input)
     {
         $query = GroupOffer::query()->category();
-      //  $query = GroupOffer::query()->groupOffer();
         return $query->paginate(
             isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
             '*',
@@ -21,6 +20,13 @@ class GroupOffersService
             isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
 
         );
+    }
+
+    public function listSubCategory($category)
+    {
+        return GroupOffer::query()->subCategory()
+            ->where('category_id',$category)
+            ->get();
     }
 
     public function listGroupWithOffer($input)
