@@ -17,7 +17,9 @@ class Offer extends Model
         'description_offer_en',
         'description_offer_es',
         'url_imagen',
-        'group_offer_id'
+        'group_offer_id',
+        'price_cup',
+        'price_usd'
     ];
 
     /**

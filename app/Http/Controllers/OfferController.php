@@ -42,6 +42,8 @@ class OfferController extends Controller
             'name_offer_en'=> 'required',
             'description_offer_en'=> 'required',
             'description_offer_es'=> 'required',
+            'price_cup' => 'required',
+            'price_usd' => 'required',
             'image' => 'nullable|image',
             'group_offer_id' => 'nullable|exists:group_offers,id',
         ]);
@@ -62,6 +64,8 @@ class OfferController extends Controller
             'name_offer_en'=> 'nullable',
             'description_offer_en'=> 'nullable',
             'description_offer_es'=> 'nullable',
+            'price_cup' => 'nullable',
+            'price_usd' => 'nullable',
             'image' => 'nullable|image',
             'group_offer_id' => 'nullable|exists:group_offers,id',
         ]);

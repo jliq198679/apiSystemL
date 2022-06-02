@@ -16,10 +16,10 @@ class AlterOfferTable extends Migration
         Schema::table('offers', function (Blueprint $table) {
             $table->dropColumn('name_offer');
             $table->string('name_offer_es')->after('id');
-            $table->dropColumn('description_offer');
-            $table->string('description_offer_es');
-
             $table->string('name_offer_en')->after('name_offer_es');
+
+            $table->dropColumn('description_offer');
+            $table->string('description_offer_es')->after('name_offer_en');
             $table->string('description_offer_en')->after('description_offer_es');
         });
     }
