@@ -7,7 +7,9 @@ namespace App\Services;
 use App\Models\GroupOffer;
 use App\Models\Offer;
 use App\Models\OfferDaily;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class OfferDailyService
 {
@@ -17,15 +19,55 @@ class OfferDailyService
      */
     public function list()
     {
-        return GroupOffer::query()
-                    ->has('offers.offerDaily')
-                    ->with(['offers' => function($query){
-                            $query->has('offerDaily')
-                                  ->select('id','name_offer','description_offer','url_imagen','group_offer_id')
-                                  ->with('offerDaily:id,frame_web_id,offer_id,price_cup,price_usd,count_offer');
-                        }
-                    ])
-                    ->get();
+        return GroupOffer::query()->category()
+            ->has('offers.offerDaily')
+            ->orHas('subsCategory.offers.offerDaily')
+            ->with([
+                'subsCategory' => function($query){
+                    $query->has('offers.offerDaily')
+                        ->withCount('offers')
+                        ->with('offers.offerDaily')
+                    ;
+                },
+                'offers'=> function($query) {
+                    $query->has('offerDaily')
+                        ->with('offerDaily')
+
+                    ;
+                }
+            ])
+            ->withCount([
+                'offers'=> function($query) {
+                    $query->has('offerDaily')
+                        ->with('offerDaily')
+
+                    ;
+                }
+            ])
+            ->get();
+    }
+
+    public function listCategory()
+    {
+        /** @var Collection $data */
+        $data = $this->list();
+
+        $data = $data->transform(function ($item){
+            $counter = $item->offers_count;
+            if($item->subsCategory->isNotEmpty()) {
+                foreach ($item->subsCategory as $subCategory)
+                {
+                    $counter += $subCategory->offers_count;
+                }
+            }
+            return [
+                'id' => $item->id,
+                'name_group_es' => $item->name_group_es ,
+                'name_group_en' => $item->name_group_en,
+                'count_daily' => $counter
+            ];
+        });
+        return $data;
     }
 
     public function store($input)

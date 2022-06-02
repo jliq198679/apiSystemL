@@ -26,6 +26,12 @@ class OfferDailyController extends Controller
         return $this->successResponse($response);
     }
 
+    public function listCategory()
+    {
+        $response = $this->offerDailyService->listCategory();
+        return $this->successResponse($response);
+    }
+
     /**
      * @param Request $request
      * @return Response|\Laravel\Lumen\Http\ResponseFactory

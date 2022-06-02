@@ -31,7 +31,7 @@ class GroupOffer extends Model
         return $this->belongsTo(GroupOffer::class, 'category_id','id');
     }
 
-    public function groupsOffer()
+    public function subsCategory()
     {
         return $this->hasMany(GroupOffer::class,'category_id','id');
     }
@@ -44,7 +44,7 @@ class GroupOffer extends Model
      */
     public function scopeCategory($query)
     {
-        return $query->whereNull('category_id' )->with('groupsOffer');
+        return $query->whereNull('category_id' );
     }
 
     /**
@@ -53,8 +53,8 @@ class GroupOffer extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeGroupOffer($query)
+    public function scopeSubCategory($query)
     {
-        return $query->whereNotNull('category_id' )->with('category');
+        return $query->whereNotNull('category_id' );
     }
 }
