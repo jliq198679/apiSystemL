@@ -51,6 +51,14 @@ class FrameWebController extends Controller
         return $this->successResponse($frameWeb);
     }
 
+    public function showByName($name)
+    {
+        $frameWeb = $this->frameWebService->showByName($name);
+        if(empty($frameWeb))
+            return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
+        return $this->successResponse($frameWeb);
+    }
+
     /**
      * @param $id
      * @param Request $request
