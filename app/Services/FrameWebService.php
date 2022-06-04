@@ -76,9 +76,9 @@ class FrameWebService
             if(count($input) == 0)
                 throw new \Exception('parametros vacios',400);
             $data = [];
-            $frame_name = Arr::pull($input,'frame_name');
-            $frame_name = trim(strtolower($frame_name));
-            Arr::set($data,'frame_name',$frame_name);
+            //$frame_name = Arr::pull($input,'frame_name');
+           // $frame_name = trim(strtolower($frame_name));
+           // Arr::set($data,'frame_name',$frame_name);
             $payload = $frameWeb->payload_frame;
             foreach ($input as $key => $value)
             {
