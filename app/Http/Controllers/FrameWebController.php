@@ -51,9 +51,12 @@ class FrameWebController extends Controller
         return $this->successResponse($frameWeb);
     }
 
-    public function showByName($name)
+    public function showByName(Request $request)
     {
-        $frameWeb = $this->frameWebService->showByName($name);
+        $this->validate($request,[
+            'frame_name' => 'required',
+        ]);
+        $frameWeb = $this->frameWebService->showByName($request->get('frame_name'));
         if(empty($frameWeb))
             return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
         return $this->successResponse($frameWeb);

@@ -33,7 +33,7 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
     $router->group(['prefix' => 'frame-web'], function () use ($router) {
         $router->get('/', ['uses' => 'FrameWebController@list']);
         $router->get('/{id}', ['uses' => 'FrameWebController@show']);
-        $router->get('/show/{frame_name}', ['uses' => 'FrameWebController@showByName']);
+        $router->post('/show', ['uses' => 'FrameWebController@showByName']);
         $router->post('/', ['uses' => 'FrameWebController@store']);
         $router->post('/{frame_name}', ['uses' => 'FrameWebController@update']);
         $router->delete('/{id}', ['uses' => 'FrameWebController@destroy']);
