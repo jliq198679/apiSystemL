@@ -34,7 +34,7 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->get('/', ['uses' => 'FrameWebController@list']);
         $router->get('/{id}', ['uses' => 'FrameWebController@show']);
         $router->post('/', ['uses' => 'FrameWebController@store']);
-        $router->put('/{id}', ['uses' => 'FrameWebController@update']);
+        $router->post('/{frame_name}', ['uses' => 'FrameWebController@update']);
         $router->delete('/{id}', ['uses' => 'FrameWebController@destroy']);
     });
     $router->group(['prefix' => 'group-offer'], function () use ($router) {

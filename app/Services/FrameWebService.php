@@ -39,6 +39,7 @@ class FrameWebService
         try{
             $data = [];
             $frame_name = Arr::pull($input,'frame_name');
+            $frame_name = trim(strtolower($frame_name));
             $type = Arr::pull($input,'type');
             Arr::set($data,'frame_name',$frame_name);
             $payload = [];
@@ -76,6 +77,7 @@ class FrameWebService
                 throw new \Exception('parametros vacios',400);
             $data = [];
             $frame_name = Arr::pull($input,'frame_name');
+            $frame_name = trim(strtolower($frame_name));
             Arr::set($data,'frame_name',$frame_name);
             $payload = $frameWeb->payload_frame;
             foreach ($input as $key => $value)
@@ -111,6 +113,12 @@ class FrameWebService
     public function show($id)
     {
         return FrameWeb::find($id);
+    }
+
+    public function showByName($name)
+    {
+        $name = trim(strtolower($name));
+        return FrameWeb::where('frame_name', $name)->first();
     }
 
     /**

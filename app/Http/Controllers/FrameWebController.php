@@ -57,14 +57,14 @@ class FrameWebController extends Controller
      * @return \Illuminate\Http\JsonResponse|Response|\Laravel\Lumen\Http\ResponseFactory
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update($id, Request $request)
+    public function update($name, Request $request)
     {
         $this->validate($request,[
             'frame_name' => 'nullable',
             'type' =>[ 'nullable', Rule::in(['payload_frame','offer_daily','offer_promotion','another'])],
             'payload'=> 'nullable'
         ]);
-        $frameWeb = $this->frameWebService->show($id);
+        $frameWeb = $this->frameWebService->showByName($name);
         if(empty($frameWeb))
             return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
 
