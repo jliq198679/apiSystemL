@@ -80,6 +80,7 @@ $router->group(['prefix' => 'frame-web'], function () use ($router) {
 $router->group(['prefix' => 'group-offer'], function () use ($router) {
     $router->get('/', ['uses' => 'GroupOffersController@list']);
     $router->get('/offers', ['uses' => 'GroupOffersController@listGroupWithOffer']);
+    $router->get('/get-subCategory/{category_id}', ['uses' => 'GroupOffersController@listSubCategory']);
 });
 $router->group(['prefix' => 'offer'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferController@list']);
