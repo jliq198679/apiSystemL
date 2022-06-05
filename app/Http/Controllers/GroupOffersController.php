@@ -4,9 +4,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Rules\ValidationCategory;
 use App\Services\GroupOffersService;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class GroupOffersController extends Controller
 {
@@ -55,6 +59,10 @@ class GroupOffersController extends Controller
         $this->validate($request,[
             'name_group_es' => 'required',
             'name_group_en' => 'required',
+            'category_id' =>  [
+                'nullable',
+                new ValidationCategory
+            ]
         ]);
         $response = $this->groupOffersService->store($request->all());
         return $this->successResponse($response);
