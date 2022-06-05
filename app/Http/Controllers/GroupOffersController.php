@@ -79,6 +79,10 @@ class GroupOffersController extends Controller
         $this->validate($request,[
             'name_group_es' => 'nullable',
             'name_group_en' => 'nullable',
+            'category_id' =>  [
+                'nullable',
+                new ValidationCategory
+            ]
         ]);
         $groupOffer = $this->groupOffersService->show($id);
         if(empty($groupOffer))
