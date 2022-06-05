@@ -33,9 +33,9 @@ class GroupOffersController extends Controller
         return $this->successResponse($response);
     }
 
-    public function listSubCategory($category_id)
+    public function listSubCategory(Request $request,$category_id)
     {
-        $response = $this->groupOffersService->listSubCategory($category_id);
+        $response = $this->groupOffersService->listSubCategory($category_id, $request->all());
         return $this->successResponse($response);
     }
 

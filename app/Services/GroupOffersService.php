@@ -22,11 +22,18 @@ class GroupOffersService
         );
     }
 
-    public function listSubCategory($category)
+    public function listSubCategory($category,$input)
     {
-        return GroupOffer::query()->subCategory()
+        $query =  GroupOffer::query()->subCategory()
             ->where('category_id',$category)
-            ->get();
+            ;
+        return $query->paginate(
+            isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
+            '*',
+            'page',
+            isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
+
+        );
     }
 
     public function listGroupWithOffer($input)
