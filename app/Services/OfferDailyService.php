@@ -77,7 +77,6 @@ class OfferDailyService
     public function store($input)
     {
         $offerDaily = OfferDaily::query()->where([
-            'frame_web_id' => $input['frame_web_id'],
             'offer_id' => $input['offer_id']
         ])
             ->whereRaw('date(created_at) = curdate()')
@@ -96,14 +95,13 @@ class OfferDailyService
      */
     public function storePackage($input)
     {
-        $frame_web_id = $input['frame_web_id'];
+
         $offers = $input['offers'];
         foreach ($offers as $offer)
         {
             $item = [];
             if(isset($offer['offer_id']) && !empty($offer['offer_id']) && !empty(Offer::find($offer['offer_id'])))
             {
-                Arr::set($item,'frame_web_id',$frame_web_id);
                 Arr::set($item,'offer_id',$offer['offer_id']);
                 if(isset($offer['count_offer']) && is_int($offer['count_offer']))
                     Arr::set($item,'count_offer',$offer['count_offer']);

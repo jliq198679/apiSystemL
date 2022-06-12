@@ -10,7 +10,6 @@ class OfferDaily extends Model
     use SoftDeletes;
     protected $table='offers_daily';
     protected $fillable = [
-        'frame_web_id',
         'offer_id',
         'price_cup',
         'price_usd',

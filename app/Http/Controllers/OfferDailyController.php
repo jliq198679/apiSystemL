@@ -46,7 +46,6 @@ class OfferDailyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'frame_web_id' => 'required|exists:frames_web,id',
             'offer_id' => 'required|exists:offers,id',
             'price_usd'=> 'nullable',
             'price_cup'=> 'nullable',
@@ -64,7 +63,6 @@ class OfferDailyController extends Controller
     public function storePackage(Request $request)
     {
         $this->validate($request,[
-            'frame_web_id' => ['required', new FrameWebIsOfferDaily],
             'offers'=> ['required','array']
         ]);
         $this->offerDailyService->storePackage($request->all());
@@ -80,7 +78,6 @@ class OfferDailyController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request,[
-            'frame_web_id' => ['required',new FrameWebIsOfferDaily],
             'offer_id' => 'required|exists:offers,id',
             'price_usd'=> 'nullable',
             'price_cup'=> 'nullable',
