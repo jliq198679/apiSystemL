@@ -5,31 +5,34 @@ namespace App\Services;
 
 
 use App\Models\FrameWeb;
-use App\Models\OfferPromotion;
+use App\Models\Offer;
+
 
 class OfferPromotionService
 {
-    public function list($frame_web_id)
+    public function list($input)
     {
-        return OfferPromotion::where('frame_web_id',$frame_web_id)->with('offer')->get();
+        return Offer::query()->where('is_promotion', '=', true)->paginate(
+            isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
+            '*',
+            'page',
+            isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
+
+        );
     }
 
-    public function store($input)
+    public function store($offer_id)
     {
-        $frame_web_id = $input['frame_web_id'];
-        $idsOffers = $input['offer_ids'];
-        $frame_web = FrameWeb::find($frame_web_id);
-        $frame_web->promotionOffers()->sync($idsOffers);
-        return $this->list($frame_web_id);
+        return Offer::query()->where('id',$offer_id)->update(['is_promotion' => true]);
     }
 
     public function show($id)
     {
-        return OfferPromotion::find($id);
+        return Offer::find($id);
     }
 
     public function destroy($id)
     {
-        return OfferPromotion::where('id',$id)->delete();
+        return Offer::query()->where('id',$id)->update(['is_promotion' => false]);
     }
 }

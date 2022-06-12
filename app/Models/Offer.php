@@ -19,7 +19,8 @@ class Offer extends Model
         'url_imagen',
         'group_offer_id',
         'price_cup',
-        'price_usd'
+        'price_usd',
+        'is_promotion'
     ];
 
     /**

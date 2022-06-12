@@ -25,7 +25,7 @@ class OffersService
             'page',
             isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
 
-        );;
+        );
     }
 
     public function store($input)

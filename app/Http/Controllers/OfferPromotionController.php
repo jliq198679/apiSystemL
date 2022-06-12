@@ -4,9 +4,6 @@
 namespace App\Http\Controllers;
 
 
-
-use App\Rules\ArrayIdsOffersExistRule;
-use App\Rules\FrameWebIsOfferPromotion;
 use App\Services\OfferPromotionService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,10 +21,7 @@ class OfferPromotionController extends Controller
      */
     public function list(Request $request)
     {
-        $this->validate($request,[
-            'frame_web_id' => 'required|exists:frames_web,id'
-        ]);
-        $response = $this->offerPromotionService->list($request->input('frame_web_id'));
+        $response = $this->offerPromotionService->list($request->all());
         return $this->successResponse($response);
     }
 
@@ -39,11 +33,9 @@ class OfferPromotionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'frame_web_id' => ['required', new FrameWebIsOfferPromotion],
-            'offer_ids' => ['required','array', new ArrayIdsOffersExistRule],
+            'offer_id' => ['required','exists:offers,id'],
         ]);
-        $response = $this->offerPromotionService->store($request->all());
-
+        $response = $this->offerPromotionService->store($request->get('offer_id'));
         return $this->successResponse($response);
     }
 
