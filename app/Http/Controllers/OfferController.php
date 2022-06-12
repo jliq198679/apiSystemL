@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 
+use App\Rules\ValidationCategory;
+use App\Rules\ValidationSubCategory;
 use App\Services\OffersService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -25,7 +27,10 @@ class OfferController extends Controller
         $this->validate($request,[
             'page' => ['nullable','integer'],
             'per_page' => ['nullable','integer'],
+            'category_id' => ['nullable',new ValidationCategory],
+            'subCategory_id' => ['nullable',new ValidationSubCategory],
         ]);
+
         $response = $this->offersService->list($request->all());
         return $this->successResponse($response);
     }

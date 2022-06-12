@@ -5,7 +5,9 @@ namespace App\Services;
 
 
 use App\Models\FrameWeb;
+use App\Models\GroupOffer;
 use App\Models\Offer;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 
@@ -19,7 +21,23 @@ class OffersService
 
     public function list($input)
     {
-        return Offer::query()->with('groupOffer')->paginate(
+        $group_offers_ids = [];
+        if(isset($input['category_id']))
+        {
+            $group_offers_ids = GroupOffer::query()->subCategory()->where('category_id',$input['category_id'])
+                ->get()->pluck('id')->toArray();
+            $group_offers_ids [] = intval($input['category_id']);
+        }
+        $query = Offer::query()
+                ->when(isset($input['subCategory_id']), function (Builder $query) use ($input){
+                    $query->whereHas('groupOffer',function ($query) use($input) {
+                        $query->where('group_offer_id',$input['subCategory_id']);
+                    });
+                })
+                ->when(isset($input['category_id']), function ($query) use($group_offers_ids){
+                    $query->whereIn('group_offer_id',$group_offers_ids);
+                });
+        return $query->with('groupOffer')->paginate(
             isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
             '*',
             'page',

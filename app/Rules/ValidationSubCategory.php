@@ -7,7 +7,7 @@ namespace App\Rules;
 use App\Models\GroupOffer;
 use Illuminate\Contracts\Validation\Rule;
 
-class ValidationCategory implements Rule
+class ValidationSubCategory implements Rule
 {
     /**
      * Determine if the validation rule passes.
@@ -18,7 +18,7 @@ class ValidationCategory implements Rule
      */
     public function passes($attribute, $value)
     {
-        $item = GroupOffer::query()->where('id',$value)->whereNull('category_id')->first();
+        $item = GroupOffer::query()->where('id',$value)->whereNotNull('category_id')->first();
         return !empty($item);
     }
 
@@ -30,6 +30,6 @@ class ValidationCategory implements Rule
     public function message()
     {
 
-        return 'El :attribute debe ser una categoria';
+        return 'El :attribute debe ser una subcategoria';
     }
 }
