@@ -60,6 +60,7 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->delete('/{id}', ['uses' => 'OfferDailyController@destroy']);
         $router->get('/category', ['uses' => 'OfferDailyController@listCategory']);
         $router->get('/get-subCategory/{category_id}', ['uses' => 'OfferDailyController@listSubCategory']);
+        $router->get('/previous', ['uses' => 'OfferDailyController@previous']);
     });
     $router->group(['prefix' => 'offer-promotion'], function () use ($router) {
         $router->get('/', ['uses' => 'OfferPromotionController@list']);

@@ -41,4 +41,15 @@ class Offer extends Model
             ->whereRaw('date(offers_daily.created_at) = curdate()')
             ;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function offerDailyPrevious()
+    {
+        return $this->hasOne(OfferDaily::class,'offer_id','id')
+            ->latest('created_at')
+            ->whereRaw('date(offers_daily.created_at) >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)')
+            ;
+    }
 }

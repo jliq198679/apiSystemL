@@ -43,6 +43,18 @@ class OfferDailyService
             ->get();
     }
 
+    public function previous($input)
+    {
+        $query = Offer::query()->has('offerDailyPrevious')->with('offerDailyPrevious');
+
+        return $query->paginate(
+            isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
+            '*',
+            'page',
+            isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
+        );
+    }
+
     public function listCategory()
     {
         /** @var Collection $data */

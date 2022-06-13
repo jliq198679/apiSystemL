@@ -38,6 +38,12 @@ class OfferDailyController extends Controller
         return $this->successResponse($response);
     }
 
+    public function previous(Request $request)
+    {
+        $response = $this->offerDailyService->previous($request->all());
+        return $this->successResponse($response);
+    }
+
     /**
      * @param Request $request
      * @return Response|\Laravel\Lumen\Http\ResponseFactory
