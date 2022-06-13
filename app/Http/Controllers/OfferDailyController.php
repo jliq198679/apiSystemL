@@ -53,8 +53,6 @@ class OfferDailyController extends Controller
     {
         $this->validate($request,[
             'offer_id' => 'required|exists:offers,id',
-            'price_usd'=> 'nullable',
-            'price_cup'=> 'nullable',
             'count_offer'=> 'required',
         ]);
         $response = $this->offerDailyService->store($request->all());

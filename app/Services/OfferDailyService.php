@@ -10,6 +10,7 @@ use App\Models\OfferDaily;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class OfferDailyService
 {
@@ -88,8 +89,14 @@ class OfferDailyService
 
     public function store($input)
     {
+        $offer = Offer::find($input['offer_id']);
+        if(empty($offer))
+            return;
+        Arr::set($input,'price_cup',$offer->price_cup);
+        Arr::set($input,'price_usd',$offer->price_usd);
+
         $offerDaily = OfferDaily::query()->where([
-            'offer_id' => $input['offer_id']
+            'offer_id' => $offer->id
         ])
             ->whereRaw('date(created_at) = curdate()')
             ->first();
@@ -107,31 +114,35 @@ class OfferDailyService
      */
     public function storePackage($input)
     {
-
-        $offers = $input['offers'];
-        foreach ($offers as $offer)
-        {
-            $item = [];
-            if(isset($offer['offer_id']) && !empty($offer['offer_id']) && !empty(Offer::find($offer['offer_id'])))
+        DB::beginTransaction();
+        try {
+            $offers = $input['offers'];
+            foreach ($offers as $offer)
             {
-                Arr::set($item,'offer_id',$offer['offer_id']);
-                if(isset($offer['count_offer']) && is_int($offer['count_offer']))
-                    Arr::set($item,'count_offer',$offer['count_offer']);
-                else
-                    Arr::set($item,'count_offer',0);
+                $item = [];
+                if(isset($offer['offer_id']) && !empty($offer['offer_id']) )
+                {
+                    $_offer = Offer::find($offer['offer_id']);
+                    if(empty($offer))
+                        continue;
+                    Arr::set($item,'offer_id',$_offer->id);
+                    if(isset($offer['count_offer']) && is_int($offer['count_offer']))
+                        Arr::set($item,'count_offer',$offer['count_offer']);
+                    else
+                        Arr::set($item,'count_offer',0);
 
-                if(isset($offer['price_cup']) && is_numeric($offer['price_cup']))
-                    Arr::set($item,'price_cup',$offer['price_cup']);
-                else
-                    Arr::set($item,'price_cup',0);
-
-                if(isset($offer['price_usd']) && is_numeric($offer['price_usd']))
-                    Arr::set($item,'price_usd',$offer['price_usd']);
-                else
-                    Arr::set($item,'price_usd',0);
-                $this->store($item);
+                    Arr::set($item,'price_cup',$_offer->price_cup);
+                    Arr::set($item,'price_usd',$_offer->price_usd);
+                    $this->store($item);
+                }
             }
+            DB::commit();
         }
+        catch (\Exception $exception)
+        {
+            DB::rollBack();
+        }
+
     }
 
     public function show($id)
