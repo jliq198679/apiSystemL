@@ -31,8 +31,8 @@ class OfferPromotionService
         return Offer::find($id);
     }
 
-    public function destroy($id)
+    public function destroy($offerPromotion)
     {
-        return Offer::query()->where('id',$id)->update(['is_promotion' => false]);
+        return Offer::query()->where('id',$offerPromotion->id)->update(['is_promotion' => false]);
     }
 }
