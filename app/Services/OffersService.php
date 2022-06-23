@@ -122,6 +122,16 @@ class OffersService
     public function update(Offer $offer,$input)
     {
         try{
+            $input = Arr::only($input,[
+                'name_offer_es',
+                'name_offer_en',
+                'description_offer_en',
+                'description_offer_es',
+                'price_cup',
+                'price_usd',
+                'image',
+                'group_offer_id',
+            ]);
             if(count($input) == 0)
                 throw new \Exception('parametros vacios',400);
             if(isset($input['image']) && !empty('image'))
