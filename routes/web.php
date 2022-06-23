@@ -47,6 +47,7 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
     });
     $router->group(['prefix' => 'offer'], function () use ($router) {
         $router->get('/', ['uses' => 'OfferController@list']);
+        $router->get('/not-daily', ['uses' => 'OfferController@listNotDaily']);
         $router->post('/', ['uses' => 'OfferController@store']);
         $router->put('/{id}', ['uses' => 'OfferController@update']);
         $router->delete('/{id}', ['uses' => 'OfferController@destroy']);

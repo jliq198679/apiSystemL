@@ -35,6 +35,17 @@ class OfferController extends Controller
         return $this->successResponse($response);
     }
 
+    public function listNotDaily(Request $request)
+    {
+        $this->validate($request,[
+            'page' => ['nullable','integer'],
+            'per_page' => ['nullable','integer'],
+        ]);
+
+        $response = $this->offersService->listNotDaily($request->all());
+        return $response;
+    }
+
     /**
      * @param Request $request
      * @return Response|\Laravel\Lumen\Http\ResponseFactory

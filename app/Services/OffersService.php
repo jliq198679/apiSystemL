@@ -49,6 +49,53 @@ class OffersService
         );
     }
 
+    public function listNotDaily($input)
+    {
+        $data = GroupOffer::query()->category()
+            ->whereHas('offers', function ( $q){
+                    $q->doesntHave('offerDaily');
+            })
+            ->orWhereHas('subsCategory.offers', function ($q){
+                $q->doesntHave('offerDaily');
+            })
+            ->with([
+                'subsCategory' => function(  $query){
+                    $query->whereHas('offers',function ( $q){
+                        $q->doesntHave('offerDaily');
+                    })
+                     ->with(['offers'=> function($q){
+                            $q->doesntHave('offerDaily');
+                        }
+                     ])
+                    ;
+                },
+                'offers'=> function($query) {
+                    $query->doesntHave('offerDaily');
+                }
+            ])
+            ->get();
+        return $data->transform(function ($item){
+            $offers = [];
+            if($item->subsCategory->isNotEmpty())
+            {
+                foreach ($item->subsCategory as $subCategory)
+                {
+                    foreach ($subCategory->offers->toArray() as $offer)
+                        $offers [] = $offer;
+                }
+            }
+            foreach ($item->offers->toArray() as $offer)
+                $offers [] = $offer;
+            return [
+                'id' => $item->id,
+                'name_group_es' => $item->name_group_es,
+                'name_group_en' => $item->name_group_en,
+                'offers' => $offers
+            ];
+        });
+
+    }
+
     public function store($input)
     {
         try{
