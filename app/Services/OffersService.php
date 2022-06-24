@@ -29,7 +29,7 @@ class OffersService
             $group_offers_ids [] = intval($input['category_id']);
         }
         $query = Offer::query()
-                ->has('offerDaily')
+              //  ->has('offerDaily')
                 ->when(isset($input['subCategory_id']), function (Builder $query) use ($input){
                     $query->whereHas('groupOffer',function ($query) use($input) {
                         $query->where('group_offer_id',$input['subCategory_id']);
@@ -38,7 +38,7 @@ class OffersService
                 ->when(isset($input['category_id']), function ($query) use($group_offers_ids){
                     $query->whereIn('group_offer_id',$group_offers_ids);
                 })
-                ->with('offerDaily')
+              //  ->with('offerDaily')
         ;
         return $query->with('groupOffer')->paginate(
             isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
