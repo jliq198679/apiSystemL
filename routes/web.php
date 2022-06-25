@@ -53,7 +53,7 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->delete('/{id}', ['uses' => 'OfferController@destroy']);
     });
     $router->group(['prefix' => 'offer-daily'], function () use ($router) {
-        $router->get('/', ['uses' => 'OfferDailyController@list']);
+        $router->get('/', ['uses' => 'OfferDailyController@listIndex']);
         /** insert one offer daily */
         $router->post('/', ['uses' => 'OfferDailyController@store']);
         $router->post('/package', ['uses' => 'OfferDailyController@storePackage']);
@@ -88,7 +88,7 @@ $router->group(['prefix' => 'offer'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferController@list']);
 });
 $router->group(['prefix' => 'offer-daily'], function () use ($router) {
-    $router->get('/', ['uses' => 'OfferController@list']);
+    $router->get('/', ['uses' => 'OfferDailyController@listIndex']);
 });
 $router->group(['prefix' => 'offer-promotion'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferPromotionController@list']);

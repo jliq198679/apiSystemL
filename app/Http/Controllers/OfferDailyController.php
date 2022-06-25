@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 use App\Rules\FrameWebIsOfferDaily;
+use App\Rules\ValidationCategory;
+use App\Rules\ValidationSubCategory;
 use App\Services\OfferDailyService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,6 +25,18 @@ class OfferDailyController extends Controller
     public function list()
     {
         $response = $this->offerDailyService->list();
+        return $this->successResponse($response);
+    }
+
+    public function listIndex(Request $request)
+    {
+        $this->validate($request,[
+            'page' => ['nullable','integer'],
+            'per_page' => ['nullable','integer'],
+            'category_id' => ['nullable',new ValidationCategory],
+            'subCategory_id' => ['nullable',new ValidationSubCategory],
+        ]);
+        $response = $this->offerDailyService->listIndex($request->all());
         return $this->successResponse($response);
     }
 

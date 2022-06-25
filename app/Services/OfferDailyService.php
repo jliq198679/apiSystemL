@@ -8,12 +8,42 @@ use App\Models\GroupOffer;
 use App\Models\Offer;
 use App\Models\OfferDaily;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class OfferDailyService
 {
+    public function listIndex($input)
+    {
+        $group_offers_ids = [];
+        if(isset($input['category_id']))
+        {
+            $group_offers_ids = GroupOffer::query()->subCategory()->where('category_id',$input['category_id'])
+                ->get()->pluck('id')->toArray();
+            $group_offers_ids [] = intval($input['category_id']);
+        }
+        $query = Offer::query()
+              ->has('offerDaily')
+            ->when(isset($input['subCategory_id']), function (Builder $query) use ($input){
+                $query->whereHas('groupOffer',function ($query) use($input) {
+                    $query->where('group_offer_id',$input['subCategory_id']);
+                });
+            })
+            ->when(isset($input['category_id']), function ($query) use($group_offers_ids){
+                $query->whereIn('group_offer_id',$group_offers_ids);
+            })
+              ->with('offerDaily')
+        ;
+        return $query->with('groupOffer')->paginate(
+            isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
+            '*',
+            'page',
+            isset($input['page']) && !empty($input['page']) ? $input['page'] : 1
+
+        );
+    }
     /**
      * ofertas diarias agrupadas por sus categorias
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
