@@ -27,6 +27,7 @@ class OfferController extends Controller
         $this->validate($request,[
             'page' => ['nullable','integer'],
             'per_page' => ['nullable','integer'],
+            'search' => 'nullable',
             'category_id' => ['nullable',new ValidationCategory],
             'subCategory_id' => ['nullable',new ValidationSubCategory],
         ]);

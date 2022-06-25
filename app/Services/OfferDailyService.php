@@ -34,9 +34,11 @@ class OfferDailyService
             ->when(isset($input['category_id']), function ($query) use($group_offers_ids){
                 $query->whereIn('group_offer_id',$group_offers_ids);
             })
-              ->with('offerDaily')
-        ;
-        return $query->with('groupOffer')->paginate(
+              ->with([
+                  'offerDaily',
+                  'groupOffer.category'
+              ]);
+        return $query->paginate(
             isset($input['per_page']) && !empty($input['per_page']) ? $input['per_page'] : 50,
             '*',
             'page',
