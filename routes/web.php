@@ -59,8 +59,6 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->post('/package', ['uses' => 'OfferDailyController@storePackage']);
         $router->put('/{id}', ['uses' => 'OfferDailyController@update']);
         $router->delete('/{id}', ['uses' => 'OfferDailyController@destroy']);
-        $router->get('/category', ['uses' => 'OfferDailyController@listCategory']);
-        $router->get('/get-subCategory/{category_id}', ['uses' => 'OfferDailyController@listSubCategory']);
         $router->get('/previous', ['uses' => 'OfferDailyController@previous']);
     });
     $router->group(['prefix' => 'offer-promotion'], function () use ($router) {
@@ -89,6 +87,8 @@ $router->group(['prefix' => 'offer'], function () use ($router) {
 });
 $router->group(['prefix' => 'offer-daily'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferDailyController@listIndex']);
+    $router->get('/category', ['uses' => 'OfferDailyController@listCategory']);
+    $router->get('/get-subCategory/{category_id}', ['uses' => 'OfferDailyController@listSubCategory']);
 });
 $router->group(['prefix' => 'offer-promotion'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferPromotionController@list']);
