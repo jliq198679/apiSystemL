@@ -87,6 +87,7 @@ $router->group(['prefix' => 'offer'], function () use ($router) {
 });
 $router->group(['prefix' => 'offer-daily'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferDailyController@listIndex']);
+    $router->get('/items', ['uses' => 'OfferDailyController@list']);
     $router->get('/category', ['uses' => 'OfferDailyController@listCategory']);
     $router->get('/get-subCategory/{category_id}', ['uses' => 'OfferDailyController@listSubCategory']);
 });
