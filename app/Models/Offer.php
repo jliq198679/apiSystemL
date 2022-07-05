@@ -52,4 +52,14 @@ class Offer extends Model
             ->whereRaw('date(offers_daily.created_at) >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)')
             ;
     }
+
+    public function typeSideDish()
+    {
+        return $this->belongsToMany(
+            TypeSideDish::class,
+            'offer_type_side_dish',
+            'offer_id',
+            'type_side_dish_id'
+        )->withTimestamps();
+    }
 }

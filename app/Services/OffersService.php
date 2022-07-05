@@ -161,4 +161,17 @@ class OffersService
     {
         return $offer->delete();
     }
+
+    public function associateTypeSideDishes($offer_id, array $typeSideDisheIds)
+    {
+        $offer =  Offer::query()->where('id',$offer_id)->first();
+        $offer->typeSideDish()->sync($typeSideDisheIds);
+        return $offer->typeSideDish()->get();
+    }
+
+    public function listTypeSideDishes($offer_id)
+    {
+        $offer =  Offer::query()->where('id',$offer_id)->first();
+        return $offer->typeSideDish()->get();
+    }
 }

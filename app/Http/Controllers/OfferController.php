@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Rules\IdsTypeSideDish;
 use App\Rules\ValidationCategory;
 use App\Rules\ValidationSubCategory;
 use App\Services\OffersService;
@@ -100,6 +101,26 @@ class OfferController extends Controller
         if(empty($offer))
             return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
         $response = $this->offersService->destroy($offer);
+        return $this->successResponse($response);
+    }
+
+    public function associateTypeSideDishes(Request $request)
+    {
+        $this->validate($request,[
+            'type_side_dish_ids' => ['required','array',new IdsTypeSideDish],
+            'offer_id' => 'required|exists:offers,id'
+        ]);
+        $response = $this->offersService->associateTypeSideDishes($request->get('offer_id'),$request->get('type_side_dish_ids'));
+        return $this->successResponse($response);
+    }
+
+    public function listTypeSideDishes($offer_id,Request $request)
+    {
+        $request->request->add(['offer_id'=>$offer_id]);
+        $this->validate($request,[
+            'offer_id' => 'required|exists:offers,id'
+        ]);
+        $response = $this->offersService->listTypeSideDishes($request->get('offer_id'));
         return $this->successResponse($response);
     }
 }
