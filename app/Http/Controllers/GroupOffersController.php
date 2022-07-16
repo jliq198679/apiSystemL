@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Rules\IdsTypeSideDish;
 use App\Rules\ValidationCategory;
 use App\Services\GroupOffersService;
 use Illuminate\Database\Query\Builder;
@@ -98,6 +99,27 @@ class GroupOffersController extends Controller
         if(empty($groupOffer))
             return $this->errorResponse('No found',Response::HTTP_NOT_FOUND);
         $response = $this->groupOffersService->destroy($groupOffer);
+        return $this->successResponse($response);
+    }
+
+    public function associateTypeSideDishes(Request $request)
+    {
+        $this->validate($request,[
+            'type_side_dish_ids' => ['required','array',new IdsTypeSideDish],
+            'group_offer_id' => 'required|exists:group_offers,id'
+        ]);
+        $response = $this->groupOffersService->associateTypeSideDishes($request->get('group_offer_id'),$request->get('type_side_dish_ids'));
+        return $this->successResponse($response);
+    }
+
+    public function listTypeSideDishes($group_offer_id,Request $request)
+    {
+        $request->request->add(['group_offer_id'=>$group_offer_id]);
+        $this->validate($request,[
+            'group_offer_id' => 'required|exists:group_offers,id'
+        ]);
+
+        $response = $this->groupOffersService->listTypeSideDishes($request->get('group_offer_id'));
         return $this->successResponse($response);
     }
 

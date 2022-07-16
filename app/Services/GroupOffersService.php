@@ -68,4 +68,17 @@ class GroupOffersService
     {
         return $frameWeb->delete();
     }
+
+    public function associateTypeSideDishes($offer_id, array $typeSideDisheIds)
+    {
+        $offerGroup =  GroupOffer::query()->where('id',$offer_id)->first();
+        $offerGroup->typeSideDish()->sync($typeSideDisheIds);
+        return $offerGroup->typeSideDish()->get();
+    }
+
+    public function listTypeSideDishes($offer_id)
+    {
+        $offerGroup =  GroupOffer::query()->where('id',$offer_id)->first();
+        return $offerGroup->typeSideDish()->get();
+    }
 }

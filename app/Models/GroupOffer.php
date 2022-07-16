@@ -57,4 +57,17 @@ class GroupOffer extends Model
     {
         return $query->whereNotNull('category_id' );
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function typeSideDish()
+    {
+        return $this->belongsToMany(
+            TypeSideDish::class,
+            'group_offer_type_side_dish',
+            'group_offer_id',
+            'type_side_dish_id'
+        )->withTimestamps();
+    }
 }

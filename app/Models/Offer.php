@@ -53,13 +53,5 @@ class Offer extends Model
             ;
     }
 
-    public function typeSideDish()
-    {
-        return $this->belongsToMany(
-            TypeSideDish::class,
-            'offer_type_side_dish',
-            'offer_id',
-            'type_side_dish_id'
-        )->withTimestamps();
-    }
+
 }

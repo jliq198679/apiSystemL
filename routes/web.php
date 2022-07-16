@@ -44,6 +44,8 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->put('/{id}', ['uses' => 'GroupOffersController@update']);
         $router->delete('/{id}', ['uses' => 'GroupOffersController@destroy']);
         $router->get('/get-subCategory/{category_id}', ['uses' => 'GroupOffersController@listSubCategory']);
+        $router->post('/associate/type-side-dish', ['uses' => 'GroupOffersController@associateTypeSideDishes']);
+        $router->get('/associate/type-side-dish/{group_offer_id}', ['uses' => 'GroupOffersController@listTypeSideDishes']);
     });
     $router->group(['prefix' => 'offer'], function () use ($router) {
         $router->get('/', ['uses' => 'OfferController@list']);
@@ -51,8 +53,6 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->post('/', ['uses' => 'OfferController@store']);
         $router->put('/{id}', ['uses' => 'OfferController@update']);
         $router->delete('/{id}', ['uses' => 'OfferController@destroy']);
-        $router->post('/associate/type-side-dish', ['uses' => 'OfferController@associateTypeSideDishes']);
-        $router->get('/associate/type-side-dish/{offer_id}', ['uses' => 'OfferController@listTypeSideDishes']);
     });
     $router->group(['prefix' => 'offer-daily'], function () use ($router) {
         $router->get('/', ['uses' => 'OfferDailyController@listIndex']);
@@ -90,10 +90,10 @@ $router->group(['prefix' => 'group-offer'], function () use ($router) {
     $router->get('/', ['uses' => 'GroupOffersController@list']);
     $router->get('/offers', ['uses' => 'GroupOffersController@listGroupWithOffer']);
     $router->get('/get-subCategory/{category_id}', ['uses' => 'GroupOffersController@listSubCategory']);
+    $router->get('/associate/type-side-dish/{group_offer_id}', ['uses' => 'GroupOffersController@listTypeSideDishes']);
 });
 $router->group(['prefix' => 'offer'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferController@list']);
-    $router->get('/associate/type-side-dish/{offer_id}', ['uses' => 'OfferController@listTypeSideDishes']);
 });
 $router->group(['prefix' => 'offer-daily'], function () use ($router) {
     $router->get('/', ['uses' => 'OfferDailyController@listIndex']);
