@@ -51,5 +51,6 @@ class TypeSideDishController extends Controller
         if(empty($typeSideDish))
             return $this->errorResponse('Not found',404);
         $response = $this->typeSideDishService->destroy($id);
+        return $this->successResponse($response);
     }
 }

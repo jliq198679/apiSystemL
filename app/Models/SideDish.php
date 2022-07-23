@@ -19,4 +19,9 @@ class SideDish extends Model
         'price_cup',
         'price_usd'
     ];
+
+    public function typeSideDish()
+    {
+        return $this->belongsTo(TypeSideDish::class,'type_side_dish_id','id');
+    }
 }

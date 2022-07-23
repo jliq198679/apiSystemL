@@ -81,6 +81,13 @@ $router->group(['prefix' => 'api','middleware' => ['auth:api'] ],function () use
         $router->delete('/{id}', ['uses' => 'TypeSideDishController@destroy']);
     });
 
+    $router->group(['prefix' => 'side-dish'], function () use ($router) {
+        $router->get('/', ['uses' => 'SideDishController@list']);
+        $router->post('/', ['uses' => 'SideDishController@store']);
+        $router->put('/{id}', ['uses' => 'SideDishController@update']);
+        $router->delete('/{id}', ['uses' => 'SideDishController@destroy']);
+    });
+
 });
 
 $router->group(['prefix' => 'frame-web'], function () use ($router) {
@@ -106,4 +113,8 @@ $router->group(['prefix' => 'offer-promotion'], function () use ($router) {
 });
 $router->group(['prefix' => 'type-side-dish'], function () use ($router) {
     $router->get('/', ['uses' => 'TypeSideDishController@list']);
+});
+
+$router->group(['prefix' => 'side-dish'], function () use ($router) {
+    $router->get('/', ['uses' => 'SideDishController@list']);
 });
