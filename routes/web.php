@@ -118,3 +118,8 @@ $router->group(['prefix' => 'type-side-dish'], function () use ($router) {
 $router->group(['prefix' => 'side-dish'], function () use ($router) {
     $router->get('/', ['uses' => 'SideDishController@list']);
 });
+
+$router->group(['prefix' => 'setting'], function () use ($router) {
+    $router->get('/', ['uses' => 'SettingController@get']);
+    $router->put('/', ['uses' => 'SettingController@update']);
+});
