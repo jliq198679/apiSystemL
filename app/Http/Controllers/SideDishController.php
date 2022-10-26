@@ -41,8 +41,8 @@ class SideDishController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request,[
-            'name_side_dish_es' => 'nullable|unique:side_dish,name_side_dish_es',
-            'name_side_dish_en' => 'nullable|unique:side_dish,name_side_dish_en',
+            /*'name_side_dish_es' => 'nullable|unique:side_dish,name_side_dish_es',
+            'name_side_dish_en' => 'nullable|unique:side_dish,name_side_dish_en',*/
             'type_side_dish_id' => ['nullable','exists:type_side_dish,id']
         ]);
         $sideDish = $this->sideDishService->find($id);
