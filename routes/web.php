@@ -123,4 +123,9 @@ $router->group(['prefix' => 'setting'], function () use ($router) {
     $router->get('/', ['uses' => 'SettingController@get']);
     $router->put('/', ['uses' => 'SettingController@update']);
     $router->get('/municipality', ['uses' => 'MunicipalityController@list']);
+    // Delivery place
+    $router->get('/delivery-place', ['uses' => 'DeliveryPlaceController@list']);
+    $router->post('/delivery-place', ['uses' => 'DeliveryPlaceController@store']);
+    $router->put('/delivery-place/{id}', ['uses' => 'DeliveryPlaceController@update']);
+    $router->delete('/delivery-place/{id}', ['uses' => 'DeliveryPlaceController@destroy']);
 });
