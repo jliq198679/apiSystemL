@@ -28,7 +28,7 @@ class PushNotificationController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required|unique:notification,name',
+            'title' => 'required|unique:notification,title',
             'body' => 'required'
         ]);
 
@@ -39,7 +39,7 @@ class PushNotificationController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request,[
-            'name' => 'required|unique:notification,name',
+            'title' => 'required|unique:notification,title',
             'body' => 'required'
         ]);
         $pushNotification = $this->pushNotificationService->find($id);
