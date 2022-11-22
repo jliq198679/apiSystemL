@@ -16,7 +16,7 @@ class CreateDeliveryPlaceTable extends Migration
         Schema::create('delivery_place', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('municipality_id');
-            $table->foreign('municipality_id','delivery_place_foreign_municipality_id')->references('id')->on('municipality');
+            $table->foreign('municipality_id','foreign_municipality_id')->references('id')->on('municipality');
             $table->string('name');
             $table->unsignedFloat('price','8',2)->default(0.00);
             $table->softDeletes();
