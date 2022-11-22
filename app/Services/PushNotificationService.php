@@ -28,12 +28,12 @@ class PushNotificationService
      * @param $input
      * @return Notification
      */
-    public function store($input):Model
+    public function store($input)
     {
         return Notification::query()->create($input);
     }
 
-    public function find($id): Model
+    public function find($id)
     {
         return Notification::find($id);
     }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Notification extends Model
 {
     use SoftDeletes;
-    protected $table='notification';
+    protected $table='notifications';
 
     protected $fillable = [
         'title',
