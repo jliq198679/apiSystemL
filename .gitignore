@@ -1,0 +1,13 @@
+.env
+.rnd
+.idea/.gitignore
+.idea/apiSystemL.iml
+.idea/modules.xml
+.idea/php.xml
+.idea/phpunit.xml
+.idea/vcs.xml
+public/storage
+storage/oauth-private.key
+storage/oauth-public.key
+public/storage
+vendor

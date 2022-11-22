@@ -129,3 +129,11 @@ $router->group(['prefix' => 'setting'], function () use ($router) {
     $router->put('/delivery-place/{id}', ['uses' => 'DeliveryPlaceController@update']);
     $router->delete('/delivery-place/{id}', ['uses' => 'DeliveryPlaceController@destroy']);
 });
+
+$router->group(['prefix' => 'push-notification'], function () use ($router) {
+    $router->get('/', ['uses' => 'PushNotificationController@list']);
+    $router->post('/', ['uses' => 'PushNotificationController@store']);
+    $router->put('/{id}', ['uses' => 'PushNotificationController@update']);
+    $router->delete('/{id}', ['uses' => 'PushNotificationController@destroy']);
+    $router->post('/send', ['uses' => 'PushNotificationController@send']);
+});
