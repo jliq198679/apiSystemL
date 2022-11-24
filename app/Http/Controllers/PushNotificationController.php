@@ -60,7 +60,7 @@ class PushNotificationController extends Controller
 
     public function send(Request $request)
     {
-        $response = $this->pushNotificationService->send();
+        $response = $this->pushNotificationService->send($request->all());
 
         return $this->successResponse($response);
     }

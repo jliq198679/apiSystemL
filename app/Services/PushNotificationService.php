@@ -52,15 +52,16 @@ class PushNotificationService
         return Notification::query()->where('id',$id)->delete();
     }
 
-    public function send()
+    public function send($input)
     {
-        $uri = "https://fcm.googleapis.com/fcm/send";
+        $uri = env('NOTIFICATION_URL');
         $data = [
             "notification"=> [
-                "title"=> "Test de notificacion",
-                "body"=> "Cuerpo el MSG"
+                "title"=> $input['title'],
+                "body"=> $input['body'],
+                "click_action"=> $input['click_action']
             ],
-            "to" => "eoP9sGe7o5B3JxFdcQ7UEo:APA91bEJhkNPjKfJXD0iWuoxVhcTQkUyRrcyGyuJoBH9CA8dRXOmkClAY0JQq6KETLL2rD2mkSiBUjnlYr2usqJZrFKl2T-Qsov3jl_B3f-GIAkoLRqvaS-EKbvwqEi4MMOuly948a-O"
+            "to" => "fM0mZuwgLAqx101MaUJkRM:APA91bFvsRncMfzVZ_wnJ4mUs4DvH9TvRKL5xV0rgztTJd4bQr8gnK_jhlU-NE8F9ZcWnD2PhpojY4s7glxo82tYU4nvxdZmb5-C5NGwc4lwaHdzDVfotWTz6LaYR93MyY2AThRJyCZE"
         ];
         $params['headers'] = [
             'Authorization' => 'key=AAAA431j5UU:APA91bEiAFwHoMFHg3qF6akvf2cawX--RfGg4ZSqXWunBnewGWJe1Ywl7WjMUi3fS60ij86ZifLe9rZMWCpVgC4K2LnUDsQ_0vGeeCX5dbnJjoCj1OeNbnXHEfDiIhKjMgmRmHcymkVg',
