@@ -6,9 +6,21 @@ namespace App\Services;
 
 use App\Models\Notification;
 use GuzzleHttp\Client;
+use \Kreait\Firebase\Contract\Firestore;
+use Kreait\Firebase;
+use Kreait\Firebase\Factory;
 
 class PushNotificationService
 {
+    protected $database;
+
+    public function __construct()
+    {
+        $this->database = new FirestoreClient([
+            'projectId' => 'mrmartin',
+        ]);
+    }
+
     /**
      * @param $input
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
@@ -72,5 +84,10 @@ class PushNotificationService
         $response = $client->request('POST', $uri, $params);
         $data = json_decode($response->getBody(), true);
         return  $data;
+    }
+
+    public function subscriptions()
+    {
+        return null;//$this->database->getReference('subscriptions')->getValue();
     }
 }
