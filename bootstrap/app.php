@@ -119,4 +119,8 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->register(Kreait\Laravel\Firebase\ServiceProvider::class);
+// If you want to use the Facades provided by the package
+$app->withFacades();
+
 return $app;
